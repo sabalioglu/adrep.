@@ -21,3 +21,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Backend
+backend/data/*.db
+backend/data/*.db-*
+backend/dist
