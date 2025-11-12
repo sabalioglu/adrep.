@@ -40,6 +40,8 @@ export interface ScrapedAd {
     replicationPrompts: string;
   } | null;
   deep_analyzed_at?: string | null;
+  media_url?: string;
+  analyzed?: boolean;
 }
 
 export interface AdAnalysis {

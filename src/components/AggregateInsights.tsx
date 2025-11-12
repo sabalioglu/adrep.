@@ -10,7 +10,6 @@ export function AggregateInsights({ ads }: AggregateInsightsProps) {
 
   const videoAds = ads.filter(ad => ad.type === 'video');
   const imageAds = ads.filter(ad => ad.type === 'image');
-  const activeAds = ads.filter(ad => ad.active_status === 'Active');
 
   const longestRunning = [...ads]
     .sort((a, b) => (b.active_hours || 0) - (a.active_hours || 0))

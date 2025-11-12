@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Copy, Upload, Loader2, Sparkles, Eye, FileText, Video, Play, CheckCircle, XCircle, Clock, Target } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Copy, Loader2, Sparkles, Eye, FileText, Video, Play, CheckCircle, XCircle, Clock, Target } from 'lucide-react';
 import { ScrapedAd } from '../types';
 
 export function CreateAdPage() {
   const location = useLocation();
-  const navigate = useNavigate();
   const sourceAd = location.state?.ad as ScrapedAd | undefined;
 
   function replacePlaceholders(text: string): string {
