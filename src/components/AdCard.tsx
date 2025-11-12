@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Eye, Image, FileText, Sparkles, Loader2, TrendingUp, Clock, Users, Target, Info, ExternalLink, Calendar, Hash, Brain, Palette, ChevronDown, ChevronUp, Copy } from 'lucide-react';
+import { Eye, Image, FileText, Sparkles, Loader2, TrendingUp, Clock, Users, Target, Info, ExternalLink, Calendar, Hash, Brain, ChevronDown, ChevronUp, Copy } from 'lucide-react';
 import { ScrapedAd, AdAnalysis, GeneratedPrompt } from '../types';
 
 interface AdCardProps {
@@ -17,8 +17,6 @@ export function AdCard({ ad, onAnalyze, onRefetch }: AdCardProps) {
   const [showDeepAnalysis, setShowDeepAnalysis] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [deepAnalyzing, setDeepAnalyzing] = useState(false);
-  const [analysis, setAnalysis] = useState<AdAnalysis | null>(null);
-  const [prompts, setPrompts] = useState<GeneratedPrompt | null>(null);
 
   const currentPage = location.pathname;
 

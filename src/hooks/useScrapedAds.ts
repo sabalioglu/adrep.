@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
 import { ScrapedAd } from '../types';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export function useScrapedAds(onlyAnalyzed: boolean = false) {
   const [ads, setAds] = useState<ScrapedAd[]>([]);
@@ -9,34 +10,23 @@ export function useScrapedAds(onlyAnalyzed: boolean = false) {
 
   useEffect(() => {
     fetchAds();
-
-    const subscription = supabase
-      .channel('scraped_ads_changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'scraped_ads' }, () => {
-        fetchAds();
-      })
-      .subscribe();
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    
+    // Poll for updates every 5 seconds
+    const interval = setInterval(fetchAds, 5000);
+    
+    return () => clearInterval(interval);
   }, [onlyAnalyzed]);
 
   async function fetchAds() {
     try {
       setLoading(true);
-      let query = supabase
-        .from('scraped_ads')
-        .select('*')
-        .order('scraped_at', { ascending: false });
-
-      if (onlyAnalyzed) {
-        query = query.eq('analyzed', true);
+      const response = await fetch(`${API_URL}/api/ads${onlyAnalyzed ? '?analyzed=true' : ''}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch ads');
       }
-
-      const { data, error } = await query;
-
-      if (error) throw error;
+      
+      const data = await response.json();
       setAds(data || []);
     } catch (err: any) {
       setError(err.message);
